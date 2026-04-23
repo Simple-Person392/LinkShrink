@@ -4,6 +4,7 @@ import com.example.linkshrinks.Service.UrlService;
 import com.example.linkshrinks.dto.ShortUrlRequest;
 import com.example.linkshrinks.dto.ShortUrlResponse;
 import com.example.linkshrinks.entity.UrlMapping;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class UrlController {
     }
     @PostMapping("/shorten")
     @ResponseBody
-    public ShortUrlResponse shortenUrl(@RequestBody ShortUrlRequest request) {
+    public ShortUrlResponse shortenUrl(@Valid @RequestBody ShortUrlRequest request) {
         UrlMapping mapping = urlService.createShortUrl(request.getOriginalUrl());
         String shortUrl = "http://localhost:8080/" + mapping.getShortCode();
         return new ShortUrlResponse(shortUrl, mapping.getOriginalUrl());

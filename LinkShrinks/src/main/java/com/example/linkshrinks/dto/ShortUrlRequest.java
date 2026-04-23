@@ -1,6 +1,9 @@
 package com.example.linkshrinks.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class ShortUrlRequest {
+    @NotBlank(message = "URL cannot be empty")
     private String originalUrl;
     public String getOriginalUrl(){
         return originalUrl;
