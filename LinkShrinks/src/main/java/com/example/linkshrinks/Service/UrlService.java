@@ -25,4 +25,16 @@ public class UrlService {
         return urlRepository.save(urlMapping);
 
     }
+    public String getOriginalUrl(String shortCode) {
+
+        UrlMapping mapping = urlRepository.findByShortCode(shortCode);
+
+        if (mapping == null) {
+
+            return null;
+
+        }
+
+        return mapping.getOriginalUrl();
+    }
 }
