@@ -7,11 +7,13 @@ public class UrlMapping {
         private Long id;
         private String originalUrl;
         private String shortCode;
+        private int clickCount;
     public UrlMapping() {
     }
     public UrlMapping(String originalUrl, String shortCode) {
         this.originalUrl = originalUrl;
         this.shortCode = shortCode;
+        this.clickCount = 0;
     }
         public Long getId() {
         return id;
@@ -23,6 +25,9 @@ public class UrlMapping {
 
         return shortCode;
     }
+    public int getClickCount(){
+        return clickCount;
+    }
         public void setId(Long id) {
         this.id = id;
     }
@@ -32,4 +37,7 @@ public class UrlMapping {
         public void setShortCode(String shortCode) {
         this.shortCode = shortCode;
     }
+        public void setClickCount(int clickCount){
+        this.clickCount = clickCount;
+        }
 }

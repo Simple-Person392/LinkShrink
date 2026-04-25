@@ -40,20 +40,17 @@ public class UrlController {
 
     }
 
-    @GetMapping("/{shortCode}")
-
+    @GetMapping("/r/{shortCode}")
     public String redirectToOriginal(@PathVariable String shortCode) {
-
-        String originalUrl = urlService.getOriginalUrl(shortCode);
-
-        if (originalUrl == null) {
-
-            return "URL not found";
-
-        }
-
+        UrlMapping mapping = urlService.getOriginalUrl(shortCode);
+        String originalUrl = mapping.getOriginalUrl();
         return "redirect:" + originalUrl;
+    }
 
+    @GetMapping("/stats/{shortCode}")
+    @ResponseBody
+    public UrlMapping getStats(@PathVariable String shortCode) {
+        return urlService.getStats(shortCode);   // 👈 calling new method
     }
 }
 

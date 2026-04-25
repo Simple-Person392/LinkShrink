@@ -37,7 +37,7 @@ public class UrlService {
         return urlRepository.save(urlMapping);
 
     }
-    public String getOriginalUrl(String shortCode) {
+    public UrlMapping getOriginalUrl(String shortCode) {
 
         UrlMapping mapping = urlRepository.findByShortCode(shortCode)
                 .orElseThrow(()-> new UrlNotFoundException("Short URL not found"));
@@ -47,7 +47,16 @@ public class UrlService {
             return null;
 
         }
+        mapping.setClickCount(mapping.getClickCount() + 1);
+        urlRepository.save(mapping);
 
-        return mapping.getOriginalUrl();
+        return mapping;
+    }
+
+    public UrlMapping getStats(String shortCode) {
+
+        return urlRepository.findByShortCode(shortCode)
+
+                .orElseThrow(() -> new UrlNotFoundException("Short URL not found"));
     }
 }
