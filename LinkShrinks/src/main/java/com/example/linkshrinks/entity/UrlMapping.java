@@ -1,11 +1,15 @@
 package com.example.linkshrinks.entity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
 @Entity
 public class UrlMapping {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
+        @NotBlank
         private String originalUrl;
+        @Column(unique = true)
         private String shortCode;
         private int clickCount;
     public UrlMapping() {

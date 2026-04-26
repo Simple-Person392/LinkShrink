@@ -8,7 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 public class UrlController {
     private final UrlService urlService;
     public UrlController(UrlService urlService){

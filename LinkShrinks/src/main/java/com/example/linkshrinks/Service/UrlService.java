@@ -7,6 +7,7 @@ import com.example.linkshrinks.exception.UrlNotFoundException;
 import com.example.linkshrinks.repository.URLRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.data.util.ClassUtils.ifPresent;
@@ -22,6 +23,12 @@ public class UrlService {
         if(!originalUrl.contains("http")){
             throw new InvalidUrlException("Url must contain http or https");
         }
+
+        Optional<UrlMapping> existing = urlRepository.findByOriginalUrl(originalUrl);
+        if (existing.isPresent()) {
+            return existing.get();
+        }
+
         urlRepository.findByOriginalUrl(originalUrl)
         .ifPresent(url -> {
             throw new UrlAlreadyExistsException("URL already shortened");
