@@ -20,8 +20,8 @@ public class UrlService {
         this.urlRepository = urlRepository;
     }
     public UrlMapping createShortUrl(String originalUrl) {
-        if(!originalUrl.contains("http")){
-            throw new InvalidUrlException("Url must contain http or https");
+        if (!(originalUrl.startsWith("http://") || originalUrl.startsWith("https://"))) {
+            throw new InvalidUrlException("Invalid URL");
         }
 
         Optional<UrlMapping> existing = urlRepository.findByOriginalUrl(originalUrl);
