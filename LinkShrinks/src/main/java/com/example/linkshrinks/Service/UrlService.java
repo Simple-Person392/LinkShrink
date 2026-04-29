@@ -5,7 +5,9 @@ import com.example.linkshrinks.exception.InvalidUrlException;
 import com.example.linkshrinks.exception.UrlAlreadyExistsException;
 import com.example.linkshrinks.exception.UrlNotFoundException;
 import com.example.linkshrinks.repository.URLRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -15,6 +17,8 @@ import static org.springframework.data.util.ClassUtils.ifPresent;
 @Service
 public class UrlService {
     private final URLRepository urlRepository;
+    @Autowired
+    private RestTemplate restTemplate;
 
     public UrlService(URLRepository urlRepository){
         this.urlRepository = urlRepository;
@@ -56,6 +60,9 @@ public class UrlService {
         }
         mapping.setClickCount(mapping.getClickCount() + 1);
         urlRepository.save(mapping);
+        String analyticsUrl = "http://localhost:8082/analytics/click/" + shortCode;
+
+        restTemplate.postForObject(analyticsUrl, null, Void.class);
 
         return mapping;
     }

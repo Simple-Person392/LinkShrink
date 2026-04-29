@@ -3,8 +3,10 @@ package com.example.linkshrinks.controller;
 import com.example.linkshrinks.Service.UrlService;
 import com.example.linkshrinks.dto.ShortUrlRequest;
 import com.example.linkshrinks.dto.ShortUrlResponse;
+import com.example.linkshrinks.dto.StatsResponse;
 import com.example.linkshrinks.entity.UrlMapping;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +32,6 @@ public class UrlController {
 
     }
     @PostMapping("/shorten")
-    @ResponseBody
     public ShortUrlResponse shortenUrl(@Valid @RequestBody ShortUrlRequest request) {
         UrlMapping mapping = urlService.createShortUrl(request.getOriginalUrl());
         String shortUrl = "http://localhost:8080/" + mapping.getShortCode();
@@ -41,16 +42,26 @@ public class UrlController {
     }
 
     @GetMapping("/r/{shortCode}")
-    public String redirectToOriginal(@PathVariable String shortCode) {
+    public ResponseEntity<Void> redirectToOriginal(@PathVariable String shortCode) {
+
         UrlMapping mapping = urlService.getOriginalUrl(shortCode);
         String originalUrl = mapping.getOriginalUrl();
-        return "redirect:" + originalUrl;
+
+        return ResponseEntity.status(302)
+                .header("Location", originalUrl)
+                .build();
     }
 
     @GetMapping("/stats/{shortCode}")
-    @ResponseBody
-    public UrlMapping getStats(@PathVariable String shortCode) {
-        return urlService.getStats(shortCode);   // 👈 calling new method
+    public StatsResponse getStats(@PathVariable String shortCode) {
+
+        UrlMapping mapping = urlService.getStats(shortCode);
+
+        return new StatsResponse(
+                mapping.getShortCode(),
+                mapping.getOriginalUrl(),
+                mapping.getClickCount()
+        );
     }
 }
 
