@@ -27,3 +27,13 @@ The system supports URL encoding/decoding, caching for fast redirection, and rat
   - Redis caching for fast lookup and reduced DB load.
   - Rate limiting to preent abused under high traffic
   - RESTful APIs for URL creation and retrival.
+
+🚀 API Endpoints
+| Method | Endpoint             | Description                 |
+| ------ | -------------------- | --------------------------- |
+| GET    | `/`                  | Health check                |
+| POST   | `/shorten`           | Create short URL            |
+| GET    | `/r/{shortCode}`     | Redirect to original URL    |
+| GET    | `/stats/{shortCode}` | Get analytics (click count) |
+
+Supports HTTP 302 redirection, click tracking, and RESTful API design
