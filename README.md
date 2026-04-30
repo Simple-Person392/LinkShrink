@@ -1,7 +1,7 @@
 # High-Performance URL Shortener
 
 #
-Scalable URL Shortener service built using Java and Spring Boot, designed to handle high read/write traffic with lo latency.
+Scalable URL Shortener service built using Java and Spring Boot, designed to handle high read/write traffic with low latency.
 The system supports URL encoding/decoding, caching for fast redirection, and rate limiting to prevent abuse under high traffic conditions.
 
 ##Architecture
