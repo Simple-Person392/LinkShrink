@@ -58,7 +58,6 @@ public class UrlService {
             return null;
 
         }
-        mapping.setClickCount(mapping.getClickCount() + 1);
         urlRepository.save(mapping);
         String analyticsUrl = "http://localhost:8082/analytics/click/" + shortCode;
 

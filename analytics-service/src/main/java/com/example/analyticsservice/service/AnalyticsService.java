@@ -23,4 +23,7 @@ public class AnalyticsService {
         repository.save(event);
 
     }
+    public Long getClickCount(String shortCode) {
+        return repository.countByShortCode(shortCode);
+    }
 }
